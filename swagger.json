@@ -1,0 +1,141 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "description": "This is documentation for the Nomoko assignment",
+    "version": "1.0.0",
+    "title": "Nomoko Assignment"
+  },
+  "servers": [
+    {
+      "url": "http://127.0.0.1:4000/",
+      "description": "localhost address"
+    }
+  ],
+  "paths": {
+    "/init": {
+      "get": {
+        "tags": [
+          "Buildings"
+        ],
+        "summary": "Endpoint to store the CSV entries into MySql DB",
+        "description": "This route returns a positive message for a successful creation of the data",
+        "parameters": [
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InitResp"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal server Error"
+          }
+        }
+      }
+    },
+    "/price": {
+      "get": {
+        "tags": [
+          "Buildings"
+        ],
+        "summary": "Return the estimated price for a building based on the values of latitude and longitude",
+        "description": "Return the estimated price for a building based on the values of latitude and longitude. The endpoint uses a simple interpolation model to return a prediction of the new price",
+        "parameters": [
+          {
+            "name": "lat",
+            "in": "query",
+            "description": "Latitude value",
+            "required": true,
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "long",
+            "in": "query",
+            "description": "Longitude value",
+            "required": true,
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PriceResp"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal server Error"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "InitResp":{
+        "type":"object",
+        "required":[
+          "code",
+          "message"
+        ],
+        "properties":{
+          "code":{
+            "type": "integer"
+          },
+          "message":{
+            "type": "string"
+          }
+        }      
+      },
+      "PriceResp":{
+        "type":"object",
+        "required":[
+          "code",
+          "lat",
+          "long",
+          "price"
+        ],
+        "properties":{
+          "code":{
+            "type": "integer"
+          },
+          "lat":{
+            "type": "number"
+          },
+          "long":{
+            "type": "number"
+          },
+          "price":{
+            "type": "number",
+            "format": "double"
+          }
+        }      
+      }
+    }
+  }
+}
