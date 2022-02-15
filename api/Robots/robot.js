@@ -1,6 +1,7 @@
 
+var servicePlanet = require('../Planets/service')
 
-module.exports = Robot;
+const orientations = ['N', 'E', 'S', 'W']
 
 class Robot {
     constructor (x, y, orientation) {
@@ -8,15 +9,16 @@ class Robot {
         this.y = y
         this.orientation = orientation
         this.status = 'ACTIVE'
+        this.planet = servicePlanet.getPlanet()
     }
 
     executeComand(comand) {
         switch (comand) {
             case "L":
-                this.moveLeft()
+                this.turnLeft()
                 break
             case "R":
-                this.moveRight()
+                this.turnRight()
                 break
             case "F":
                 this.forward()
@@ -26,8 +28,7 @@ class Robot {
         }
     }
 
-    moveLeft() {
-        let orientations = ['N', 'E', 'S', 'W']
+    turnRight() {
         let current = this.orientation
         let idx = orientations.indexOf(current)
         if (idx === orientations.length - 1)
@@ -36,8 +37,7 @@ class Robot {
             this.orientation = orientations[idx + 1]
     }
 
-    moveRight() {
-        let orientations = ['N', 'E', 'S', 'W']
+    turnLeft() {
         let current = this.orientation
         let idx = orientations.indexOf(current)
         if (idx === 0)
@@ -47,25 +47,69 @@ class Robot {
     }
 
     forward() {
-        switch (this.orientation) {
-            case "N":
-                this.y += 1
-                break
-            case "E":
-                this.x += 1
-                break
-            case "S":
-                this.y -= 1
-                break
-            case "W":
-                this.x -= 1
-                break
-            default:
-                return new Error("Unknow forward action")
+        if (this.status !== 'LOST') {
+            switch (this.orientation) {
+                case "N":
+                    this.moveNorth()
+                    break
+                case "E":
+                    this.moveEast()
+                    break
+                case "S":
+                    this.moveSouth()
+                    break
+                case "W":
+                    this.moveWest()
+                    break
+                default:
+                    return new Error("Unknown forward direction")
+            }
         }
     }
 
-    setStatus(status) {
-        this.status = status
+    moveNorth() {
+        let newY = this.y + 1
+        if (newY <= this.planet.upperY)
+            this.y += 1
+        else {
+            this.invalidateStatusAndScentRobot()
+        }
     }
+
+    moveEast() {
+        let newX = this.x + 1
+        if (newX <= this.planet.upperX)
+            this.x += 1
+        else {
+            this.invalidateStatusAndScentRobot()
+        }
+    }
+
+    moveSouth() {
+        let newY = this.y - 1
+        if (newY >= 0)
+            this.y -= 1
+        else {
+            this.invalidateStatusAndScentRobot()
+        }
+    }
+
+    moveWest() {
+        let newX = this.x - 1
+        if (newX >= 0)
+            this.x -= 1
+        else {
+            this.invalidateStatusAndScentRobot()
+        }
+    }
+
+    invalidateStatusAndScentRobot() {
+        if (!this.planet.offPoints.includes([this.x, this.y])) {
+            this.planet.addOffPosition([this.x, this.y])
+            this.status = "LOST"
+        }
+    }
+
 }
+
+module.exports = Robot

@@ -4,15 +4,21 @@
     "license": "",
     "scripts": {
         "start": "node ./app.js",
-        "start:dev": "nodemon ./app.js"
+        "start:dev": "nodemon ./app.js",
+        "test": "mocha --reporter spec --inspect ./test/dcsl_test.js",
+        "start:test": "mocha --timeout 1000 --colors --reporter mocha-junit-reporter"
     },
     "dependencies": {
         "cors": "^2.8.5",
         "express": "^4.17.1",
         "joi": "^17.2.0",
+        "supertest": "^3.0.0",
         "swagger-ui-express": "^4.1.4"
     },
     "devDependencies": {
+        "chai": "^3.5.0",
+        "mocha": "^8.3.0",
+        "mocha-junit-reporter": "^2.0.0",
         "nodemon": "^2.0.15"
     }
 }

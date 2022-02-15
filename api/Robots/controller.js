@@ -7,23 +7,21 @@ const validateRequest = require('../../middleware/validate-request');
 const schemas = require('../../middleware/schemas');
 
 // routes
-router.post('/robots', validateRequest(schemas.coordinates, "body"), initRobot());
-router.get('/robots', getCurrentStatus());
+router.post('/', validateRequest(schemas.robot, "body"), executeRobot);
+router.get('/results', robotsPositions);
 
 // route functions
 
-function initRobot(req, res, next) {
+function executeRobot(req, res, next) {
     const { coordinates, path } = req.body
-    service.initRobot(coordinates)
-    service.moveRobot(path)
-        .then(res.json({ code: 200, message: "Successfully robot creation" }))
-        .catch(next);
+    let robot = service.initRobot(coordinates)
+    service.moveRobot(robot, path)
+    res.json({ code: 200, message: "Successfully robot creation" })
 }
 
-function getCurrentStatus(req, res, next) {
-    service.getCurrentStatus()
-        .then(output => res.json({ code: 200, output: output }))
-        .catch(next);
+function robotsPositions(req, res, next) {
+    let output = service.robotsPositions()
+    res.json({ code: 200, output: output })
 }
 
 module.exports = router;

@@ -6,7 +6,8 @@ const swaggerUi = require('swagger-ui-express');
 const swagger = require("./swagger.json")
 
 const errorHandler = require('./middleware/error-handler');
-const buildings = require('./api/buildings/controller')
+const planets = require('./api/Planets/controller')
+const robots = require('./api/Robots/controller')
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -18,7 +19,8 @@ app.use(errorHandler);
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swagger))
 
 // api routes
-app.use('/',buildings);
+app.use('/planets', planets);
+app.use('/robots', robots);
 
 // start server
 const port = process.env.NODE_ENV === 'production' ? (process.env.PORT || 80) : 4000;

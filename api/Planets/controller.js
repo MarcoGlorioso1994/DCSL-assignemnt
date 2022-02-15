@@ -7,22 +7,20 @@ const validateRequest = require('../../middleware/validate-request');
 const schemas = require('../../middleware/schemas');
 
 // routes
-router.post('/planets', validateRequest(schemas.bounds, "body"), initPlanet());
-router.post('/fastDiscovery', validateRequest(schemas.instructions, "body"), fastDiscovery())
+router.post('/init', validateRequest(schemas.planet, "body"), initPlanet);
+router.post('/fastDiscovery', validateRequest(schemas.instructions, "body"), fastDiscovery)
 
 // route functions
 function initPlanet(req, res, next) {
-    const { highBound } = req.body
-    service.initPlanet(highBound)
-        .then(res.json({ code: 200, message: "Successfully planet creation" }))
-        .catch(next);
+    const { upperBounds } = req.body
+    service.initPlanet(upperBounds)
+    res.json({ code: 200, message: "Successfully planet creation" })
 }
 
 function fastDiscovery(req, res, next) {
     const { instructions } = req.body
     service.fastDiscovery(instructions)
-        .then(res.json({ code: 200, message: "Successfully robot creation" }))
-        .catch(next);
+    res.json({ code: 200, message: "Successfully robot creation" })
 }
 
 module.exports = router;

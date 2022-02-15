@@ -1,9 +1,9 @@
 {
   "openapi": "3.0.0",
   "info": {
-    "description": "This is documentation for the Nomoko assignment",
+    "description": "This is documentation for the DCSL assignment",
     "version": "1.0.0",
-    "title": "Nomoko Assignment"
+    "title": "DCSL Assignment"
   },
   "servers": [
     {
@@ -12,10 +12,10 @@
     }
   ],
   "paths": {
-    "/init": {
-      "get": {
+    "/planets/init": {
+      "post": {
         "tags": [
-          "Buildings"
+          "Planets"
         ],
         "summary": "Endpoint to store the CSV entries into MySql DB",
         "description": "This route returns a positive message for a successful creation of the data",
@@ -44,10 +44,42 @@
         }
       }
     },
-    "/price": {
+    "/planets/fastDiscovery": {
       "get": {
         "tags": [
-          "Buildings"
+          "Planets"
+        ],
+        "summary": "Endpoint to store the CSV entries into MySql DB",
+        "description": "This route returns a positive message for a successful creation of the data",
+        "parameters": [
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Output"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal server Error"
+          }
+        }
+      }
+    },
+    "/robots": {
+      "post": {
+        "tags": [
+          "Robots"
         ],
         "summary": "Return the estimated price for a building based on the values of latitude and longitude",
         "description": "Return the estimated price for a building based on the values of latitude and longitude. The endpoint uses a simple interpolation model to return a prediction of the new price",
@@ -77,7 +109,57 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/PriceResp"
+                  "$ref": "#/components/schemas/InitResp"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal server Error"
+          }
+        }
+      }
+    },
+    "/robots/results": {
+      "get": {
+        "tags": [
+          "Robots"
+        ],
+        "summary": "Return the estimated price for a building based on the values of latitude and longitude",
+        "description": "Return the estimated price for a building based on the values of latitude and longitude. The endpoint uses a simple interpolation model to return a prediction of the new price",
+        "parameters": [
+          {
+            "name": "lat",
+            "in": "query",
+            "description": "Latitude value",
+            "required": true,
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "long",
+            "in": "query",
+            "description": "Longitude value",
+            "required": true,
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Output"
                 }
               }
             }
@@ -112,27 +194,18 @@
           }
         }      
       },
-      "PriceResp":{
+      "Output":{
         "type":"object",
         "required":[
           "code",
-          "lat",
-          "long",
-          "price"
+          "output"
         ],
         "properties":{
           "code":{
             "type": "integer"
           },
-          "lat":{
-            "type": "number"
-          },
-          "long":{
-            "type": "number"
-          },
-          "price":{
-            "type": "number",
-            "format": "double"
+          "output":{
+            "type": "string"
           }
         }      
       }

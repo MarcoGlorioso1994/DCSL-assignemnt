@@ -1,38 +1,51 @@
-﻿const db = require('../../helpers/db');
-const readCSVtoJson = require('../../helpers/csv');
-const getNewPrice = require('../../helpers/movement');
+﻿var Robot = require('./robot')
 
-async function getAll() {
-    return await db.Building.findAll();
+var robots = new Array()
+
+function initRobot(coordinates) {
+    var coordinatesArr = coordinates.split(' ');
+
+    let x = parseInt(coordinatesArr[0])
+    let y = parseInt(coordinatesArr[1])
+    let orientation = coordinatesArr[2]
+
+    //validation range
+    if (x < 0 || x > 50)
+        throw { status: 400, message: 'coordinate x out of range' }
+
+    //Validation range
+    if (y < 0 || y > 50)
+        throw { status: 400, message: 'coordinate y out of range' }
+
+    //validation value
+    if (!['N', 'E', 'S', 'W'].includes(orientation))
+        throw { status: 400, message: 'Unknown orientation value' }
+
+    var rb = new Robot(x, y, orientation)
+    robots.push(rb)
+    return rb
 }
 
-async function getBuilding(id) {
-    const building = await db.Building.findByPk(id);
-    if (!building) throw 'Building not found';
-    return building;
+function moveRobot(robot, path) {
+    for (let cmd of path)
+        robot.executeComand(cmd)
 }
 
-async function initSqlData() {
-    let jsonArray = await readCSVtoJson()
-
-    //Store only one time
-    let entries = await getAll()
-    if (entries.length == 0) {
-        for (let el of jsonArray) {
-            const building = new db.Building(el);
-            //save user
-            await building.save();
-        }
+function robotsPositions() {
+    var output = ""
+    for (let rb of robots) {
+        output += `${rb.x} ${rb.y} ${rb.orientation}`
+        if (rb.status === 'LOST')
+            output += " LOST\n"
+        else
+            output += "\n"
     }
-
-    return
-}
-
-async function getEstimatedPrice(lat, long) {
-    return await getNewPrice(lat, long)
+    console.log(output)
+    return output
 }
 
 module.exports = {
-    getEstimatedPrice,
-    initSqlData
+    initRobot,
+    moveRobot,
+    robotsPositions
 };
