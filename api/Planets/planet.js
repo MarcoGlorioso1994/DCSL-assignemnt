@@ -1,5 +1,4 @@
 class Planet {
-
     constructor (upperX, upperY) {
         this.upperX = upperX
         this.upperY = upperY
@@ -10,7 +9,6 @@ class Planet {
         let arr = [x, y]
         this.offPoints.push(arr)
     }
-
 }
 
 module.exports = Planet;

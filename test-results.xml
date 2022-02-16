@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuites name="Mocha Tests" time="0.0870" tests="4" failures="0">
-  <testsuite name="Root Suite" timestamp="2022-02-15T22:46:30" tests="0" time="0.0000" failures="0">
+<testsuites name="Mocha Tests" time="0.0570" tests="4" failures="0">
+  <testsuite name="Root Suite" timestamp="2022-02-16T18:53:44" tests="0" time="0.0000" failures="0">
   </testsuite>
-  <testsuite name="DCSL Assignment API" timestamp="2022-02-15T22:46:30" tests="4" file="C:\Users\marco\WebstormProjects\_INTERVIEWS\DCSL-Assignment\test\dcsl_test.js" time="0.0860" failures="0">
-    <testcase name="DCSL Assignment API Post Planet 1: should return a 200 response" time="0.0630" classname="Post Planet 1: should return a 200 response">
+  <testsuite name="DCSL Assignment API" timestamp="2022-02-16T18:53:44" tests="4" file="C:\Users\marco\WebstormProjects\_INTERVIEWS\DCSL-Assignment\test\dcsl_test.js" time="0.0550" failures="0">
+    <testcase name="DCSL Assignment API Post Planet 1: should return a 200 response" time="0.0400" classname="Post Planet 1: should return a 200 response">
     </testcase>
-    <testcase name="DCSL Assignment API Post Robot 1: should return a 200 response" time="0.0060" classname="Post Robot 1: should return a 200 response">
+    <testcase name="DCSL Assignment API Post Robot 1: should return a 200 response" time="0.0050" classname="Post Robot 1: should return a 200 response">
     </testcase>
-    <testcase name="DCSL Assignment API Post Robot 2: should return a 200 response" time="0.0030" classname="Post Robot 2: should return a 200 response">
+    <testcase name="DCSL Assignment API Post Robot 2: should return a 200 response" time="0.0020" classname="Post Robot 2: should return a 200 response">
     </testcase>
-    <testcase name="DCSL Assignment API Post Robot 3: should return a 200 response" time="0.0030" classname="Post Robot 3: should return a 200 response">
+    <testcase name="DCSL Assignment API Post Robot 3: should return a 200 response" time="0.0010" classname="Post Robot 3: should return a 200 response">
     </testcase>
   </testsuite>
 </testsuites>

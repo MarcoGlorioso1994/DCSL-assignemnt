@@ -21,7 +21,7 @@ describe('DCSL Assignment API', function () {
 
     //Read the origin value
     it('Post Planet 1: should return a 200 response', function (done) {
-        api.post(`/planets/init`)
+        api.post(`/planets`)
             .set('Accept', 'application/json')
             .send(planet)
             .expect('Content-Type', /json/)

@@ -8,7 +8,7 @@ const schemas = require('../../middleware/schemas');
 
 // routes
 router.post('/', validateRequest(schemas.robot, "body"), executeRobot);
-router.get('/results', robotsPositions);
+router.get('/positions', robotsPositions);
 
 // route functions
 

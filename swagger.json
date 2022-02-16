@@ -12,15 +12,25 @@
     }
   ],
   "paths": {
-    "/planets/init": {
+    "/planets": {
       "post": {
         "tags": [
           "Planets"
         ],
-        "summary": "Endpoint to store the CSV entries into MySql DB",
-        "description": "This route returns a positive message for a successful creation of the data",
-        "parameters": [
-        ],
+        "summary": "Method to create a new planet",
+        "description": "Accepts the upper-right coordinates of the rectangular world and it will create a planet instance",
+        "parameters": [],
+        "requestBody": {
+          "description": "Upper right coordinates",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpperRight"
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
             "description": "Successful operation",
@@ -44,65 +54,25 @@
         }
       }
     },
-    "/planets/fastDiscovery": {
-      "get": {
-        "tags": [
-          "Planets"
-        ],
-        "summary": "Endpoint to store the CSV entries into MySql DB",
-        "description": "This route returns a positive message for a successful creation of the data",
-        "parameters": [
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful operation",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Output"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad Request"
-          },
-          "404": {
-            "description": "Not found"
-          },
-          "500": {
-            "description": "Internal server Error"
-          }
-        }
-      }
-    },
     "/robots": {
       "post": {
         "tags": [
           "Robots"
         ],
-        "summary": "Return the estimated price for a building based on the values of latitude and longitude",
-        "description": "Return the estimated price for a building based on the values of latitude and longitude. The endpoint uses a simple interpolation model to return a prediction of the new price",
-        "parameters": [
-          {
-            "name": "lat",
-            "in": "query",
-            "description": "Latitude value",
-            "required": true,
-            "schema": {
-              "type": "number"
-            }
-          },
-          {
-            "name": "long",
-            "in": "query",
-            "description": "Longitude value",
-            "required": true,
-            "schema": {
-              "type": "number"
+        "summary": "Method to create a new robot",
+        "description": "Accepts the start grid position, the orientation and the path of a robot. The endpoint is used to save one robot. Multiple requests will give you the possibility to save multiple robots.",
+        "parameters": [],
+        "requestBody": {
+          "description": "Robot position and path",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RobotPosPath"
+              }
             }
           }
-        ],
+        },
         "responses": {
           "200": {
             "description": "Successful operation",
@@ -131,28 +101,9 @@
         "tags": [
           "Robots"
         ],
-        "summary": "Return the estimated price for a building based on the values of latitude and longitude",
-        "description": "Return the estimated price for a building based on the values of latitude and longitude. The endpoint uses a simple interpolation model to return a prediction of the new price",
-        "parameters": [
-          {
-            "name": "lat",
-            "in": "query",
-            "description": "Latitude value",
-            "required": true,
-            "schema": {
-              "type": "number"
-            }
-          },
-          {
-            "name": "long",
-            "in": "query",
-            "description": "Longitude value",
-            "required": true,
-            "schema": {
-              "type": "number"
-            }
-          }
-        ],
+        "summary": "Return the final postions and status",
+        "description": "Returns the final positions of each robot. It will return the final position of all created robots.",
+        "parameters": [],
         "responses": {
           "200": {
             "description": "Successful operation",
@@ -179,6 +130,32 @@
   },
   "components": {
     "schemas": {
+      "UpperRight":{
+        "type":"object",
+        "required":[
+          "upperBounds"
+        ],
+        "properties":{
+          "upperBounds":{
+            "type": "string"
+          }
+        }      
+      },
+      "RobotPosPath":{
+        "type":"object",
+        "required":[
+          "coordinates",
+          "path"
+        ],
+        "properties":{
+          "coordinates":{
+            "type": "string"
+          },
+          "path":{
+            "type": "string"
+          }
+        }      
+      },
       "InitResp":{
         "type":"object",
         "required":[

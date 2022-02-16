@@ -27,12 +27,7 @@ function initPlanet(upperBounds) {
     }
 }
 
-function fastDiscovery(instructions) {
-
-}
-
 module.exports = {
     initPlanet,
-    fastDiscovery,
     getPlanet
 };

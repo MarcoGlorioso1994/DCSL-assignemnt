@@ -15,7 +15,7 @@ const schemas = {
     robot: Joi.object().keys({
         coordinates: Joi.string().required(),
         path: Joi.string().required().min(1).max(99)
-    })
+    }),
 
     // define all the other schemas below 
 };

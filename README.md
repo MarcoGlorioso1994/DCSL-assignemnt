@@ -1,19 +1,11 @@
 
-# Nomoko Assignment
+# DCSL Assignment
 
-Express project with two hhtp endpoints. 
-The first one stores the data from a csv file into an instance of MySql database.
-The second one receives two query params lat and long and return the estimated price for the specific coordinates.
-THE PROJECT NEEDS A MYSQL INSTANCE
+NodeJS project with Express framework. The project implements three endpoints. The first accepts the upper-right coordinates of the rectangular world and will create a planet instance. The second one accepts the orientation, start grid position and the path of a robot. The endpoint is used to save one robot. Multiple requests will give you the possibility to save multiple robots. The third endpoint is a get endpoint to get the final positions of each robot. It will return the final position of all created robots. 
 
+## Appendix
 
-## Environment components
-
-To run this project, you will need to add the following components: 
-
-`MySQL 8.0`
-
-`MySQL Workbench(UI client option)`
+The project implement an API REST to create the planet and to return the expected results related to the final position of the robots. 
 
 
 ## API Reference
@@ -21,26 +13,30 @@ To run this project, you will need to add the following components:
 #### To store csv values to MySql DB
 
 ```http
-  GET /init
+  POST /planets
 ```
 
-#### Get Price
+| Parameter | Type     | Location | Description         |
+| :-------- | :------- | :----|:------------------------- |
+| `upperBounds` | `string` | body |  **Required** coordinates for the upper-right grip point |                                           
 
 ```http
-  GET /price?lat={lat}&long={long}
+  POST /robots
 ```
 
-| Parameter | Type     | Description                |
-| :-------- | :------- | :------------------------- |
-| `lat` | `double` | **Required**. Latitude value. Range between -90/90  |
-| `long` | `double` | **Required**. Longitude value. Range between -180/180  |
+| Parameter | Type     | Location | Description         |
+| :-------- | :------- | :--------|:------------------------- |
+| `coordinates` | `string` | body |  **Required** start coordinates and orientation of the robot | 
+| `path` | `string` | body |  **Required** path that will be executed by the robot | 
+
+#### Get final robots positions and orientations
+
+```http
+  GET /robots/results
+```
 
 
 
-## Appendix
-
-The project uses a simple implementation of linear interpolation.
-The estimation of the new price is done using the @turf/turf npm library. 
 
 
 ## Authors
@@ -50,7 +46,7 @@ The estimation of the new price is done using the @turf/turf npm library.
 
 ## Deployment
 
-The project could be deployed on cloud. Currently, it is only for a local usage. 
+The deploy could be deployed on cloud. Adding a pipelien the service could be deploy quickly on an appengine or a serverless cloud function. 
 
 
 ## Run Locally
@@ -58,7 +54,7 @@ The project could be deployed on cloud. Currently, it is only for a local usage.
 Clone the project
 
 ```bash
-  git clone https://glorius@bitbucket.org/marcoglorioso1994/nomoko.git
+  git clone https://github.com/MarcoGlorioso1994/DCSL-assignemnt.git
 ```
 
 Go to the project directory
@@ -84,7 +80,19 @@ Start the server with Nodemon
 ```bash
   npm run start:dev
 ```
+
+Run Mocha test 
+
+```bash
+  npm run test
+```
+
+Run Mocha test with XML results for DevOps usages
+
+```bash
+  npm start:test
+```
 ## Swagger Documentation
 
-Local usage: http://127.0.0.1/api-docs/
+To use locally:  http://127.0.0.1:4000/api-docs
 
