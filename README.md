@@ -32,7 +32,7 @@ The project implement an API REST to create the planet and to return the expecte
 #### Get final robots positions and orientations
 
 ```http
-  GET /robots/results
+  GET /robots/positions
 ```
 
 
@@ -46,7 +46,7 @@ The project implement an API REST to create the planet and to return the expecte
 
 ## Deployment
 
-The deploy could be deployed on cloud. Adding a pipelien the service could be deploy quickly on an appengine or a serverless cloud function. 
+The service could be deployed on cloud. Adding a pipelien the service could be deploy quickly on an appengine or a serverless cloud function. 
 
 
 ## Run Locally

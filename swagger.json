@@ -96,7 +96,7 @@
         }
       }
     },
-    "/robots/results": {
+    "/robots/positions": {
       "get": {
         "tags": [
           "Robots"
